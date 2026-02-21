@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Streak — StudyFlow Pro</title>
+
+<style>
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* NAVBAR */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 18px 40px;
+  background: rgba(10, 15, 26, 0.85);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 999;
+  border-bottom: 1px solid rgba(0,255,200,0.2);
+}
+
+.navbar .logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #00ffc8;
+  text-shadow: 0 0 10px #00ffc8;
+}
+
+.navbar nav a {
+  margin-left: 25px;
+  color: #e8f7ff;
+  text-decoration: none;
+  font-size: 1.05rem;
+  transition: 0.25s;
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+}
+
+.navbar nav a:hover {
+  color: #00ffc8;
+  border-bottom: 2px solid #00ffc8;
+  text-shadow: 0 0 10px #00ffc8;
+}
+
+/* GLOBAL */
+body {
+  background: #0a0f1a;
+  color: #e8f7ff;
+  padding-top: 90px;
+  line-height: 1.6;
+}
+
+section {
+  padding: 80px 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+/* NEON */
+.neon-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #00ffc8;
+  text-shadow: 0 0 10px #00ffc8, 0 0 20px #00ffc8;
+}
+
+.neon-btn {
+  display: inline-block;
+  padding: 14px 28px;
+  margin: 12px 0;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+  text-decoration: none;
+  border: 2px solid #00ffc8;
+  color: #00ffc8;
+  box-shadow: 0 0 10px #00ffc8;
+}
+
+.neon-btn:hover {
+  background: #00ffc8;
+  color: #0a0f1a;
+  box-shadow: 0 0 20px #00ffc8;
+}
+
+/* BOX */
+.box {
+  background: #0f1524;
+  padding: 25px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,255,200,0.3);
+  margin-top: 30px;
+}
+
+/* STREAK */
+.streak-number {
+  font-size: 3rem;
+  color: #00ffc8;
+  text-shadow: 0 0 15px #00ffc8;
+  font-weight: 700;
+  text-align: center;
+}
+
+.record {
+  font-size: 1.2rem;
+  color: #b400ff;
+  text-shadow: 0 0 10px #b400ff;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* RANDOM MODE */
+.random-result {
+  margin-top: 20px;
+  padding: 20px;
+  background: #131b2e;
+  border-radius: 10px;
+  border: 1px solid rgba(180,0,255,0.3);
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="logo">StudyFlow Pro</div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="studymatch.html">StudyMatch</a>
+    <a href="gradecalc.html">GradeCalc</a>
+    <a href="todo.html">To‑Do</a>
+    <a href="studystreak.html">Streak</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section>
+  <h1 class="neon-title">Study Streak</h1>
+  <p>Mantieni la tua serie di giorni di studio e supera il tuo record.</p>
+
+  <div class="box">
+    <div class="streak-number" id="streak">0</div>
+    <div class="record" id="record">Record: 0 giorni</div>
+
+    <button class="neon-btn" onclick="studiedToday()">Ho studiato oggi</button>
+    <button class="neon-btn" onclick="resetStreak()">Reset</button>
+  </div>
+
+  <h1 class="neon-title" style="margin-top:60px;">Random Study Mode</h1>
+  <p>Non sai cosa fare? Lascia decidere a StudyFlow Pro.</p>
+
+  <div class="box">
+    <button class="neon-btn" onclick="generateRandom()">Genera modalità</button>
+    <div class="random-result" id="randomBox"></div>
+  </div>
+</section>
+
+<script>
+/* -------------------- STREAK SYSTEM -------------------- */
+let streak = parseInt(localStorage.getItem("streak")) || 0;
+let record = parseInt(localStorage.getItem("record")) || 0;
+let lastStudy = localStorage.getItem("lastStudy") || "";
+
+document.getElementById("streak").textContent = streak;
+document.getElementById("record").textContent = "Record: " + record + " giorni";
+
+function studiedToday() {
+  const today = new Date().toDateString();
+
+  if (today === lastStudy) {
+    alert("Hai già segnato oggi!");
+    return;
+  }
+
+  const yesterday = new Date(Date.now() - 86400000).toDateString();
+
+  if (lastStudy === yesterday) {
+    streak++;
+  } else {
+    streak = 1;
+  }
+
+  lastStudy = today;
+
+  if (streak > record) record = streak;
+
+  localStorage.setItem("streak", streak);
+  localStorage.setItem("record", record);
+  localStorage.setItem("lastStudy", lastStudy);
+
+  document.getElementById("streak").textContent = streak;
+  document.getElementById("record").textContent = "Record: " + record + " giorni";
+}
+
+function resetStreak() {
+  streak = 0;
+  localStorage.setItem("streak", 0);
+  document.getElementById("streak").textContent = 0;
+}
+
+/* -------------------- RANDOM STUDY MODE -------------------- */
+function generateRandom() {
+  const durations = ["15 min", "25 min", "40 min", "1 ora"];
+  const methods = ["Pomodoro", "Active Recall", "Mappe Mentali", "Flashcard", "Quiz", "Sintesi"];
+  const tasks = ["Ripasso", "Teoria", "Esercizi", "Appunti", "Flashcard", "Quiz"];
+  const breaks = ["5 min", "10 min", "15 min"];
+
+  const result = `
+    <p><strong>Durata:</strong> ${durations[Math.floor(Math.random()*durations.length)]}</p>
+    <p><strong>Metodo:</strong> ${methods[Math.floor(Math.random()*methods.length)]}</p>
+    <p><strong>Attività:</strong> ${tasks[Math.floor(Math.random()*tasks.length)]}</p>
+    <p><strong>Pausa:</strong> ${breaks[Math.floor(Math.random()*breaks.length)]}</p>
+  `;
+
+  document.getElementById("randomBox").innerHTML = result;
+}
+</script>
+
+</body>
+</html>
