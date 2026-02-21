@@ -6,7 +6,7 @@
 <title>StudyFlow Pro — Home</title>
 
 <style>
-/* -------------------- RESET -------------------- */
+/* RESET */
 * {
   margin: 0;
   padding: 0;
@@ -14,7 +14,7 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* -------------------- NAVBAR -------------------- */
+/* NAVBAR */
 .navbar {
   position: fixed;
   top: 0;
@@ -53,7 +53,7 @@
   text-shadow: 0 0 10px #00ffc8;
 }
 
-/* Spazio per evitare che il contenuto salga sotto la navbar */
+/* GLOBAL */
 body {
   background: #0a0f1a;
   color: #e8f7ff;
@@ -68,7 +68,7 @@ section {
   margin: auto;
 }
 
-/* -------------------- NEON EFFECTS -------------------- */
+/* NEON */
 .neon-title {
   font-size: 3rem;
   font-weight: 700;
@@ -76,10 +76,11 @@ section {
   text-shadow: 0 0 10px #00ffc8, 0 0 20px #00ffc8;
 }
 
-.neon-sub {
-  font-size: 1.2rem;
-  opacity: 0.85;
-  margin-top: 10px;
+.neon-title-small {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #00ffc8;
+  text-shadow: 0 0 10px #00ffc8, 0 0 20px #00ffc8;
 }
 
 .neon-btn {
@@ -119,7 +120,7 @@ section {
   box-shadow: 0 0 20px #b400ff;
 }
 
-/* -------------------- HERO -------------------- */
+/* HERO */
 .hero {
   text-align: center;
   padding-top: 120px;
@@ -132,7 +133,7 @@ section {
   opacity: 0.85;
 }
 
-/* -------------------- FEATURES -------------------- */
+/* FEATURES */
 .features {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -158,7 +159,25 @@ section {
   margin-bottom: 10px;
 }
 
-/* -------------------- CTA -------------------- */
+/* RANDOM STUDY MODE */
+.random-box {
+  background: #0f1524;
+  padding: 25px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,255,200,0.3);
+  margin-top: 60px;
+}
+
+.random-result {
+  margin-top: 20px;
+  padding: 20px;
+  background: #131b2e;
+  border-radius: 10px;
+  border: 1px solid rgba(180,0,255,0.3);
+  line-height: 1.7;
+}
+
+/* CTA */
 .cta {
   text-align: center;
   padding: 80px 20px;
@@ -173,7 +192,7 @@ section {
   margin-bottom: 20px;
 }
 
-/* -------------------- FOOTER -------------------- */
+/* FOOTER */
 footer {
   text-align: center;
   padding: 25px;
@@ -185,48 +204,20 @@ footer {
 
 <body>
 
-<!-- -------------------- NAVBAR -------------------- -->
+<!-- NAVBAR -->
 <header class="navbar">
-  <header class="navbar">
-  <div class="logo">
-    <svg width="200" height="50" viewBox="0 0 260 60" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="neonGlow">
-          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-          <feMerge>
-            <feMergeNode in="coloredBlur"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
-        </filter>
-      </defs>
-
-      <text x="10" y="40"
-            font-family="Poppins, sans-serif"
-            font-size="32"
-            font-weight="700"
-            fill="#00ffc8"
-            filter="url(#neonGlow)"
-            style="letter-spacing: 1px;">
-        StudyFlow Pro
-      </text>
-    </svg>
-  </div>
+  <div class="logo">StudyFlow Pro</div>
 
   <nav>
     <a href="index.html">Home</a>
     <a href="studymatch.html">StudyMatch</a>
     <a href="gradecalc.html">GradeCalc</a>
+    <a href="todo.html">To‑Do</a>
+    <a href="randomstudy.html">Random</a>
   </nav>
 </header>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="studymatch.html">StudyMatch</a>
-    <a href="gradecalc.html">GradeCalc</a>
-  </nav>
-</header>
-
-<!-- -------------------- HERO -------------------- -->
+<!-- HERO -->
 <section class="hero">
   <h1 class="neon-title">StudyFlow Pro</h1>
   <p class="neon-sub">Studia meglio, passa prima.</p>
@@ -236,9 +227,9 @@ footer {
   <a href="studymatch.html" class="neon-btn btn-purple">Trova il tuo metodo di studio</a>
 </section>
 
-<!-- -------------------- FEATURES -------------------- -->
+<!-- FEATURES -->
 <section>
-  <h2 class="neon-title" style="font-size:2rem;">Cosa puoi fare qui</h2>
+  <h2 class="neon-title-small">Cosa puoi fare qui</h2>
 
   <div class="features">
     <div class="feature-box">
@@ -252,23 +243,50 @@ footer {
     </div>
 
     <div class="feature-box">
-      <h3>📅 Piano personalizzato</h3>
-      <p>Unisci voti + metodo → ottieni un piano settimanale intelligente.</p>
+      <h3>📅 To‑Do List</h3>
+      <p>Organizza il tuo studio con una lista neon intelligente.</p>
     </div>
+  </div>
+
+  <!-- RANDOM STUDY MODE INTEGRATO -->
+  <div class="random-box">
+    <h2 class="neon-title-small">🎲 Random Study Mode</h2>
+    <p>Non sai da dove iniziare? Lascia decidere a StudyFlow Pro.</p>
+
+    <button class="neon-btn btn-green" onclick="generateRandom()">Genera modalità</button>
+
+    <div class="random-result" id="randomBox"></div>
   </div>
 </section>
 
-<!-- -------------------- CTA -------------------- -->
+<!-- CTA -->
 <section class="cta">
   <h2>Sei pronto a migliorare il tuo studio</h2>
   <a href="gradecalc.html" class="neon-btn btn-green">Inizia ora</a>
-  <a href="gradecalc.html" class="neon-btn btn-purple">Vai al calcolatore</a>
 </section>
 
-<!-- -------------------- FOOTER -------------------- -->
+<!-- FOOTER -->
 <footer>
   © StudyFlow Pro — Creato da Davide
 </footer>
+
+<script>
+function generateRandom() {
+  const durations = ["15 min", "25 min", "40 min", "1 ora"];
+  const methods = ["Pomodoro", "Active Recall", "Mappe Mentali", "Flashcard", "Quiz", "Sintesi"];
+  const tasks = ["Ripasso", "Teoria", "Esercizi", "Appunti", "Flashcard", "Quiz"];
+  const breaks = ["5 min", "10 min", "15 min"];
+
+  const result = `
+    <p><strong>Durata:</strong> ${durations[Math.floor(Math.random()*durations.length)]}</p>
+    <p><strong>Metodo:</strong> ${methods[Math.floor(Math.random()*methods.length)]}</p>
+    <p><strong>Attività:</strong> ${tasks[Math.floor(Math.random()*tasks.length)]}</p>
+    <p><strong>Pausa:</strong> ${breaks[Math.floor(Math.random()*breaks.length)]}</p>
+  `;
+
+  document.getElementById("randomBox").innerHTML = result;
+}
+</script>
 
 </body>
 </html>
