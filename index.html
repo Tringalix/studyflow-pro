@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyFlow Pro</title>
+
+<style>
+/* -------------------- RESET -------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* -------------------- GLOBAL -------------------- */
+body {
+  background: #0a0f1a;
+  color: #e8f7ff;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+section {
+  padding: 80px 20px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* -------------------- NEON EFFECTS -------------------- */
+.neon-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #00ffc8;
+  text-shadow: 0 0 10px #00ffc8, 0 0 20px #00ffc8;
+}
+
+.neon-sub {
+  font-size: 1.2rem;
+  opacity: 0.85;
+  margin-top: 10px;
+}
+
+.neon-btn {
+  display: inline-block;
+  padding: 14px 28px;
+  margin: 12px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+  text-decoration: none;
+  border: 2px solid;
+}
+
+.btn-green {
+  color: #00ffc8;
+  border-color: #00ffc8;
+  box-shadow: 0 0 10px #00ffc8;
+}
+
+.btn-green:hover {
+  background: #00ffc8;
+  color: #0a0f1a;
+  box-shadow: 0 0 20px #00ffc8;
+}
+
+.btn-purple {
+  color: #b400ff;
+  border-color: #b400ff;
+  box-shadow: 0 0 10px #b400ff;
+}
+
+.btn-purple:hover {
+  background: #b400ff;
+  color: #0a0f1a;
+  box-shadow: 0 0 20px #b400ff;
+}
+
+/* -------------------- HERO -------------------- */
+.hero {
+  text-align: center;
+  padding-top: 120px;
+  padding-bottom: 100px;
+}
+
+.hero p {
+  margin-top: 20px;
+  font-size: 1.1rem;
+  opacity: 0.85;
+}
+
+/* -------------------- FEATURES -------------------- */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.feature-box {
+  background: #0f1524;
+  padding: 25px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,255,200,0.2);
+  transition: 0.25s;
+}
+
+.feature-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 15px rgba(0,255,200,0.3);
+}
+
+.feature-box h3 {
+  color: #00ffc8;
+  margin-bottom: 10px;
+}
+
+/* -------------------- WHY -------------------- */
+.why-box {
+  margin-top: 40px;
+}
+
+.why-box p {
+  margin-bottom: 12px;
+}
+
+/* -------------------- STEPS -------------------- */
+.steps {
+  margin-top: 40px;
+}
+
+.step {
+  margin-bottom: 20px;
+  padding-left: 10px;
+  border-left: 3px solid #b400ff;
+}
+
+/* -------------------- CTA -------------------- */
+.cta {
+  text-align: center;
+  padding: 80px 20px;
+  background: #0f1524;
+  border-top: 1px solid rgba(0,255,200,0.2);
+  border-bottom: 1px solid rgba(0,255,200,0.2);
+}
+
+.cta h2 {
+  color: #b400ff;
+  text-shadow: 0 0 10px #b400ff;
+  margin-bottom: 20px;
+}
+
+/* -------------------- FOOTER -------------------- */
+footer {
+  text-align: center;
+  padding: 25px;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+</style>
+</head>
+
+<body>
+
+<!-- -------------------- HERO -------------------- -->
+<section class="hero">
+  <h1 class="neon-title">StudyFlow Pro</h1>
+  <p class="neon-sub">Studia meglio, passa prima.</p>
+  <p>Strumenti intelligenti per calcolare la tua media, capire come studi e creare un piano su misura.</p>
+
+  <a href="#gradecalc" class="neon-btn btn-green">Calcola i tuoi voti</a>
+  <a href="#studymatch" class="neon-btn btn-purple">Trova il tuo metodo di studio</a>
+</section>
+
+<!-- -------------------- FEATURES -------------------- -->
+<section>
+  <h2 class="neon-title" style="font-size:2rem;">Cosa puoi fare qui</h2>
+
+  <div class="features">
+    <div class="feature-box">
+      <h3>📊 GradeCalc</h3>
+      <p>Calcola la tua media, simula scenari e scopri quanto ti manca per raggiungere il tuo obiettivo.</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>🧠 StudyMatch</h3>
+      <p>Rispondi a poche domande e scopri il metodo di studio perfetto per te.</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>📅 Piano personalizzato</h3>
+      <p>Unisci voti + metodo → ottieni un piano settimanale intelligente.</p>
+    </div>
+  </div>
+</section>
+
+<!-- -------------------- WHY -------------------- -->
+<section>
+  <h2 class="neon-title" style="font-size:2rem;">Perché funziona</h2>
+
+  <div class="why-box">
+    <p>✨ <strong>Semplice:</strong> tutto in un’unica pagina, senza registrazione.</p>
+    <p>🧠 <strong>Intelligente:</strong> calcoli avanzati e suggerimenti personalizzati.</p>
+    <p>🎓 <strong>Creato per studenti:</strong> niente fronzoli, solo ciò che serve davvero.</p>
+  </div>
+</section>
+
+<!-- -------------------- STEPS -------------------- -->
+<section>
+  <h2 class="neon-title" style="font-size:2rem;">Come funziona</h2>
+
+  <div class="steps">
+    <div class="step"><strong>1.</strong> Inserisci i tuoi voti</div>
+    <div class="step"><strong>2.</strong> Fai il test StudyMatch</div>
+    <div class="step"><strong>3.</strong> Ottieni un piano su misura</div>
+  </div>
+</section>
+
+<!-- -------------------- CTA -------------------- -->
+<section class="cta">
+  <h2>Sei pronto a migliorare il tuo studio</h2>
+  <a href="#gradecalc" class="neon-btn btn-green">Inizia ora</a>
+  <a href="#gradecalc" class="neon-btn btn-purple">Vai al calcolatore</a>
+</section>
+
+<!-- -------------------- FOOTER -------------------- -->
+<footer>
+  © StudyFlow Pro — Creato da Davide
+</footer>
+
+</body>
+</html>
