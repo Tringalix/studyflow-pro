@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GradeCalc — Calcolatore Voti</title>
+
+<style>
+/* -------------------- RESET -------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* -------------------- GLOBAL -------------------- */
+body {
+  background: #0a0f1a;
+  color: #e8f7ff;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+section {
+  padding: 80px 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+/* -------------------- NEON -------------------- */
+.neon-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #00ffc8;
+  text-shadow: 0 0 10px #00ffc8, 0 0 20px #00ffc8;
+}
+
+.neon-sub {
+  font-size: 1.2rem;
+  opacity: 0.85;
+  margin-top: 10px;
+}
+
+.neon-btn {
+  display: inline-block;
+  padding: 14px 28px;
+  margin: 12px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+  text-decoration: none;
+  border: 2px solid;
+}
+
+.btn-green {
+  color: #00ffc8;
+  border-color: #00ffc8;
+  box-shadow: 0 0 10px #00ffc8;
+}
+
+.btn-green:hover {
+  background: #00ffc8;
+  color: #0a0f1a;
+  box-shadow: 0 0 20px #00ffc8;
+}
+
+.btn-purple {
+  color: #b400ff;
+  border-color: #b400ff;
+  box-shadow: 0 0 10px #b400ff;
+}
+
+.btn-purple:hover {
+  background: #b400ff;
+  color: #0a0f1a;
+  box-shadow: 0 0 20px #b400ff;
+}
+
+/* -------------------- HERO -------------------- */
+.hero {
+  text-align: center;
+  padding-top: 120px;
+  padding-bottom: 80px;
+}
+
+/* -------------------- INPUT AREA -------------------- */
+.input-box {
+  background: #0f1524;
+  padding: 25px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,255,200,0.3);
+  margin-bottom: 30px;
+}
+
+.input-box h3 {
+  color: #00ffc8;
+  margin-bottom: 15px;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: none;
+  background: #131b2e;
+  color: #e8f7ff;
+}
+
+.input-box button {
+  margin-top: 10px;
+}
+
+/* -------------------- TABLE -------------------- */
+table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+th {
+  color: #00ffc8;
+}
+
+/* -------------------- RESULT -------------------- */
+.result-box {
+  background: #0f1524;
+  padding: 30px;
+  border-radius: 10px;
+  border: 1px solid rgba(180,0,255,0.3);
+  margin-top: 40px;
+}
+
+.result-box h2 {
+  color: #b400ff;
+  text-shadow: 0 0 10px #b400ff;
+  margin-bottom: 20px;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  opacity: 0.7;
+}
+</style>
+</head>
+
+<body>
+
+<!-- -------------------- HERO -------------------- -->
+<section class="hero">
+  <h1 class="neon-title">GradeCalc</h1>
+  <p class="neon-sub">Calcola la tua media in un attimo</p>
+  <p>Inserisci i tuoi voti, simula scenari e scopri quanto ti manca per raggiungere il tuo obiettivo.</p>
+</section>
+
+<!-- -------------------- INPUT AREA -------------------- -->
+<section>
+  <div class="input-box">
+    <h3>Inserisci un voto</h3>
+
+    <input type="number" id="voto" placeholder="Voto (es. 28)">
+    <input type="number" id="cfu" placeholder="CFU (opzionale)">
+
+    <button class="neon-btn btn-green" onclick="aggiungiVoto()">Aggiungi voto</button>
+  </div>
+
+  <table id="tabellaVoti" style="display:none;">
+    <tr>
+      <th>Voto</th>
+      <th>CFU</th>
+    </tr>
+  </table>
+
+  <button id="calcolaBtn" class="neon-btn btn-purple" style="display:none;" onclick="calcolaMedia()">Calcola media</button>
+</section>
+
+<!-- -------------------- RESULT AREA -------------------- -->
+<section id="resultArea" style="display:none;"></section>
+
+<footer>
+  © StudyFlow Pro — Creato da Davide
+</footer>
+
+<script>
+let voti = [];
+
+/* -------------------- AGGIUNGI VOTO -------------------- */
+function aggiungiVoto() {
+  const voto = parseFloat(document.getElementById("voto").value);
+  const cfu = parseFloat(document.getElementById("cfu").value) || 1;
+
+  if (!voto || voto < 18 || voto > 30) {
+    alert("Inserisci un voto valido (18-30)");
+    return;
+  }
+
+  voti.push({ voto, cfu });
+
+  aggiornaTabella();
+  document.getElementById("calcolaBtn").style.display = "inline-block";
+}
+
+/* -------------------- AGGIORNA TABELLA -------------------- */
+function aggiornaTabella() {
+  const tab = document.getElementById("tabellaVoti");
+  tab.style.display = "table";
+
+  tab.innerHTML = `
+    <tr>
+      <th>Voto</th>
+      <th>CFU</th>
+    </tr>
+  `;
+
+  voti.forEach(v => {
+    tab.innerHTML += `
+      <tr>
+        <td>${v.voto}</td>
+        <td>${v.cfu}</td>
+      </tr>
+    `;
+  });
+}
+
+/* -------------------- CALCOLA MEDIA -------------------- */
+function calcolaMedia() {
+  const semplice = voti.reduce((a,b) => a + b.voto, 0) / voti.length;
+
+  const totCFU = voti.reduce((a,b) => a + b.cfu, 0);
+  const ponderata = voti.reduce((a,b) => a + b.voto * b.cfu, 0) / totCFU;
+
+  mostraRisultati(semplice, ponderata);
+}
+
+/* -------------------- MOSTRA RISULTATI -------------------- */
+function mostraRisultati(mediaSemplice, mediaPonderata) {
+  const area = document.getElementById("resultArea");
+  area.style.display = "block";
+
+  area.innerHTML = `
+    <div class="result-box">
+      <h2>Risultati</h2>
+
+      <p><strong>Media semplice:</strong> ${mediaSemplice.toFixed(2)}</p>
+      <p><strong>Media ponderata:</strong> ${mediaPonderata.toFixed(2)}</p>
+
+      <h3>Simula un voto</h3>
+      <input type="number" id="simVoto" placeholder="Inserisci voto ipotetico">
+      <button class="neon-btn btn-green" onclick="simula()">Simula</button>
+
+      <div id="simResult"></div>
+
+      <h3>Obiettivo</h3>
+      <input type="number" id="target" placeholder="Media desiderata">
+      <button class="neon-btn btn-purple" onclick="calcolaObiettivo()">Calcola</button>
+
+      <div id="targetResult"></div>
+
+      <br><br>
+      <button class="neon-btn btn-green" onclick="reset()">Azzera voti</button>
+      <a href="studymatch.html" class="neon-btn btn-purple">Vai a StudyMatch</a>
+    </div>
+  `;
+}
+
+/* -------------------- SIMULATORE -------------------- */
+function simula() {
+  const voto = parseFloat(document.getElementById("simVoto").value);
+  if (!voto) return;
+
+  const nuovaMedia = (voti.reduce((a,b) => a + b.voto, 0) + voto) / (voti.length + 1);
+
+  document.getElementById("simResult").innerHTML =
+    `<p>Nuova media con ${voto}: <strong>${nuovaMedia.toFixed(2)}</strong></p>`;
+}
+
+/* -------------------- OBIETTIVO -------------------- */
+function calcolaObiettivo() {
+  const target = parseFloat(document.getElementById("target").value);
+  if (!target) return;
+
+  const mediaAttuale = voti.reduce((a,b) => a + b.voto, 0) / voti.length;
+
+  if (mediaAttuale >= target) {
+    document.getElementById("targetResult").innerHTML =
+      `<p>Hai già raggiunto il tuo obiettivo!</p>`;
+    return;
+  }
+
+  let esamiNecessari = 0;
+  let media = mediaAttuale;
+
+  while (media < target && esamiNecessari < 20) {
+    esamiNecessari++;
+    media = (media * (voti.length + esamiNecessari - 1) + 30) / (voti.length + esamiNecessari);
+  }
+
+  document.getElementById("targetResult").innerHTML =
+    `<p>Ti servono circa <strong>${esamiNecessari}</strong> esami da 30 per raggiungere ${target}.</p>`;
+}
+
+/* -------------------- RESET -------------------- */
+function reset() {
+  voti = [];
+  location.reload();
+}
+</script>
+
+</body>
+</html>
