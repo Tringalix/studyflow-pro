@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neon To‑Do — StudyFlow Pro</title>
+
+<style>
+/* -------------------- RESET -------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* -------------------- NAVBAR -------------------- */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 18px 40px;
+  background: rgba(10, 15, 26, 0.85);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 999;
+  border-bottom: 1px solid rgba(0,255,200,0.2);
+}
+
+.navbar .logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #00ffc8;
+  text-shadow: 0 0 10px #00ffc8;
+}
+
+.navbar nav a {
+  margin-left: 25px;
+  color: #e8f7ff;
+  text-decoration: none;
+  font-size: 1.05rem;
+  transition: 0.25s;
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+}
+
+.navbar nav a:hover {
+  color: #00ffc8;
+  border-bottom: 2px solid #00ffc8;
+  text-shadow: 0 0 10px #00ffc8;
+}
+
+/* Spazio per evitare che il contenuto salga sotto la navbar */
+body {
+  background: #0a0f1a;
+  color: #e8f7ff;
+  padding-top: 90px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+section {
+  padding: 80px 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+/* -------------------- NEON -------------------- */
+.neon-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #00ffc8;
+  text-shadow: 0 0 10px #00ffc8, 0 0 20px #00ffc8;
+}
+
+.neon-btn {
+  display: inline-block;
+  padding: 12px 22px;
+  margin: 10px 0;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+  text-decoration: none;
+  border: 2px solid #00ffc8;
+  color: #00ffc8;
+  box-shadow: 0 0 10px #00ffc8;
+}
+
+.neon-btn:hover {
+  background: #00ffc8;
+  color: #0a0f1a;
+  box-shadow: 0 0 20px #00ffc8;
+}
+
+/* -------------------- TODO BOX -------------------- */
+.todo-box {
+  background: #0f1524;
+  padding: 25px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,255,200,0.3);
+  margin-top: 30px;
+}
+
+.todo-box input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: #131b2e;
+  color: #e8f7ff;
+  margin-bottom: 15px;
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #131b2e;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 10px 0;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: 0.25s;
+}
+
+.task.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+  border-color: #00ffc8;
+  box-shadow: 0 0 10px rgba(0,255,200,0.3);
+}
+
+.task button {
+  background: transparent;
+  border: none;
+  color: #00ffc8;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: 0.25s;
+}
+
+.task button:hover {
+  color: #b400ff;
+}
+</style>
+</head>
+
+<body>
+
+<!-- -------------------- NAVBAR -------------------- -->
+<header class="navbar">
+  <div class="logo">StudyFlow Pro</div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="studymatch.html">StudyMatch</a>
+    <a href="gradecalc.html">GradeCalc</a>
+    <a href="todo.html">To‑Do</a>
+  </nav>
+</header>
+
+<!-- -------------------- HERO -------------------- -->
+<section>
+  <h1 class="neon-title">To‑Do List Neon</h1>
+  <p>Organizza il tuo studio con stile.</p>
+
+  <div class="todo-box">
+    <input type="text" id="taskInput" placeholder="Aggiungi un nuovo compito...">
+    <button class="neon-btn" onclick="addTask()">Aggiungi</button>
+
+    <div id="taskList"></div>
+  </div>
+</section>
+
+<script>
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+/* -------------------- RENDER -------------------- */
+function renderTasks() {
+  const list = document.getElementById("taskList");
+  list.innerHTML = "";
+
+  tasks.forEach((task, index) => {
+    const div = document.createElement("div");
+    div.className = "task" + (task.completed ? " completed" : "");
+    div.innerHTML = `
+      <span onclick="toggleTask(${index})">${task.text}</span>
+      <button onclick="deleteTask(${index})">✕</button>
+    `;
+    list.appendChild(div);
+  });
+
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+/* -------------------- ADD -------------------- */
+function addTask() {
+  const input = document.getElementById("taskInput");
+  const text = input.value.trim();
+
+  if (text === "") return;
+
+  tasks.push({ text, completed: false });
+  input.value = "";
+  renderTasks();
+}
+
+/* -------------------- TOGGLE -------------------- */
+function toggleTask(index) {
+  tasks[index].completed = !tasks[index].completed;
+  renderTasks();
+}
+
+/* -------------------- DELETE -------------------- */
+function deleteTask(index) {
+  tasks.splice(index, 1);
+  renderTasks();
+}
+
+renderTasks();
+</script>
+
+</body>
+</html>
