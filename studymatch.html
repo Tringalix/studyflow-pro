@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyMatch — Trova il tuo metodo di studio</title>
+
+<style>
+/* -------------------- RESET -------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* -------------------- GLOBAL -------------------- */
+body {
+  background: #0a0f1a;
+  color: #e8f7ff;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+section {
+  padding: 80px 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+/* -------------------- NEON -------------------- */
+.neon-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #b400ff;
+  text-shadow: 0 0 10px #b400ff, 0 0 20px #b400ff;
+}
+
+.neon-sub {
+  font-size: 1.2rem;
+  opacity: 0.85;
+  margin-top: 10px;
+}
+
+.neon-btn {
+  display: inline-block;
+  padding: 14px 28px;
+  margin: 12px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+  text-decoration: none;
+  border: 2px solid;
+}
+
+.btn-purple {
+  color: #b400ff;
+  border-color: #b400ff;
+  box-shadow: 0 0 10px #b400ff;
+}
+
+.btn-purple:hover {
+  background: #b400ff;
+  color: #0a0f1a;
+  box-shadow: 0 0 20px #b400ff;
+}
+
+.btn-green {
+  color: #00ffc8;
+  border-color: #00ffc8;
+  box-shadow: 0 0 10px #00ffc8;
+}
+
+.btn-green:hover {
+  background: #00ffc8;
+  color: #0a0f1a;
+  box-shadow: 0 0 20px #00ffc8;
+}
+
+/* -------------------- HERO -------------------- */
+.hero {
+  text-align: center;
+  padding-top: 120px;
+  padding-bottom: 80px;
+}
+
+/* -------------------- TEST -------------------- */
+.question-box {
+  background: #0f1524;
+  padding: 25px;
+  border-radius: 10px;
+  border: 1px solid rgba(180,0,255,0.3);
+  margin-bottom: 20px;
+}
+
+.question-box h3 {
+  color: #b400ff;
+  margin-bottom: 10px;
+}
+
+.option {
+  margin: 10px 0;
+  padding: 12px;
+  background: #131b2e;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: 0.25s;
+}
+
+.option:hover {
+  background: #1c2740;
+  border-color: #b400ff;
+  box-shadow: 0 0 10px rgba(180,0,255,0.3);
+}
+
+.option.selected {
+  background: #b400ff;
+  color: #0a0f1a;
+  border-color: #b400ff;
+  box-shadow: 0 0 15px #b400ff;
+}
+
+/* -------------------- RESULT -------------------- */
+.result-box {
+  background: #0f1524;
+  padding: 30px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,255,200,0.3);
+  margin-top: 40px;
+}
+
+.result-box h2 {
+  color: #00ffc8;
+  text-shadow: 0 0 10px #00ffc8;
+  margin-bottom: 20px;
+}
+
+.result-box h3 {
+  color: #b400ff;
+  margin-top: 20px;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  opacity: 0.7;
+}
+</style>
+</head>
+
+<body>
+
+<!-- -------------------- HERO -------------------- -->
+<section class="hero">
+  <h1 class="neon-title">StudyMatch</h1>
+  <p class="neon-sub">Scopri il tuo metodo di studio ideale</p>
+  <p>Rispondi a poche domande e ottieni un profilo personalizzato.</p>
+
+  <a class="neon-btn btn-purple" onclick="startTest()">Inizia il test</a>
+</section>
+
+<!-- -------------------- TEST AREA -------------------- -->
+<section id="testArea" style="display:none;"></section>
+
+<!-- -------------------- RESULT AREA -------------------- -->
+<section id="resultArea" style="display:none;"></section>
+
+<footer>
+  © StudyFlow Pro — Creato da Davide
+</footer>
+
+<script>
+/* -------------------- DOMANDE -------------------- */
+const questions = [
+  {
+    q: "Quando studi, cosa ti aiuta di più?",
+    options: ["Video", "Schemi e colori", "Ripetere ad alta voce", "Esercizi pratici"]
+  },
+  {
+    q: "Come prendi appunti?",
+    options: ["Mappe mentali", "Liste ordinate", "Registrazioni vocali", "Non prendo appunti"]
+  },
+  {
+    q: "Come preferisci ripassare?",
+    options: ["Flashcard", "Mappe", "Ripetizione", "Quiz"]
+  },
+  {
+    q: "Quanto riesci a concentrarti?",
+    options: ["15–20 min", "25–30 min", "45–60 min", "Oltre 1h"]
+  },
+  {
+    q: "Cosa ti distrae di più?",
+    options: ["Rumori", "Troppo testo", "Noia", "Mancanza di struttura"]
+  },
+  {
+    q: "Cosa ti motiva?",
+    options: ["Obiettivi chiari", "Gamification", "Routine", "Varietà"]
+  }
+];
+
+let answers = [];
+
+/* -------------------- AVVIO TEST -------------------- */
+function startTest() {
+  document.getElementById("testArea").style.display = "block";
+  renderQuestion(0);
+}
+
+/* -------------------- RENDER DOMANDA -------------------- */
+function renderQuestion(index) {
+  const area = document.getElementById("testArea");
+  area.innerHTML = "";
+
+  const qBox = document.createElement("div");
+  qBox.className = "question-box";
+
+  qBox.innerHTML = `<h3>Domanda ${index+1} di ${questions.length}</h3><p>${questions[index].q}</p>`;
+
+  questions[index].options.forEach((opt, i) => {
+    const div = document.createElement("div");
+    div.className = "option";
+    div.textContent = opt;
+
+    div.onclick = () => {
+      answers[index] = i;
+      if (index + 1 < questions.length) {
+        renderQuestion(index + 1);
+      } else {
+        showResult();
+      }
+    };
+
+    qBox.appendChild(div);
+  });
+
+  area.appendChild(qBox);
+}
+
+/* -------------------- RISULTATO -------------------- */
+function showResult() {
+  document.getElementById("testArea").style.display = "none";
+
+  const result = document.getElementById("resultArea");
+  result.style.display = "block";
+
+  const profile = calculateProfile();
+  const method = suggestMethod(profile);
+  const plan = generatePlan(method);
+
+  result.innerHTML = `
+    <div class="result-box">
+      <h2>Il tuo profilo: ${profile}</h2>
+      <h3>Metodo consigliato: ${method}</h3>
+      <p>${describeMethod(method)}</p>
+
+      <h3>Piano di studio di 7 giorni</h3>
+      <ul>${plan.map(p => `<li>${p}</li>`).join("")}</ul>
+
+      <a class="neon-btn btn-purple" onclick="restart()">Rifai il test</a>
+    </div>
+  `;
+}
+
+/* -------------------- LOGICA PROFILO -------------------- */
+function calculateProfile() {
+  const counts = [0,0,0,0,0];
+
+  answers.forEach(a => counts[a]++);
+
+  const max = Math.max(...counts);
+  const index = counts.indexOf(max);
+
+  return ["Visivo", "Analitico", "Uditivo", "Cinestetico"][index] || "Analitico";
+}
+
+/* -------------------- METODO CONSIGLIATO -------------------- */
+function suggestMethod(profile) {
+  switch(profile) {
+    case "Visivo": return "Mind Mapping";
+    case "Analitico": return "Cornell";
+    case "Uditivo": return "Active Recall";
+    case "Cinestetico": return "Pomodoro";
+    default: return "Spaced Repetition";
+  }
+}
+
+function describeMethod(method) {
+  const desc = {
+    "Mind Mapping": "Perfetto per chi ragiona per immagini, colori e collegamenti.",
+    "Cornell": "Ottimo per chi ama ordine, struttura e appunti puliti.",
+    "Active Recall": "Ideale per chi impara ripetendo e spiegando a voce.",
+    "Pomodoro": "Perfetto per chi ha bisogno di blocchi brevi e pause frequenti.",
+    "Spaced Repetition": "Il metodo più efficace per memorizzare a lungo termine."
+  };
+  return desc[method];
+}
+
+/* -------------------- PIANO DI STUDIO -------------------- */
+function generatePlan(method) {
+  switch(method) {
+    case "Mind Mapping":
+      return [
+        "Giorno 1: Crea una mappa mentale del capitolo",
+        "Giorno 2: Aggiungi colori e collegamenti",
+        "Giorno 3: Ripassa la mappa",
+        "Giorno 4: Crea una seconda mappa",
+        "Giorno 5: Confronta le due mappe",
+        "Giorno 6: Ripasso attivo",
+        "Giorno 7: Quiz finale"
+      ];
+    case "Cornell":
+      return [
+        "Giorno 1: Prendi appunti Cornell",
+        "Giorno 2: Rivedi la colonna delle domande",
+        "Giorno 3: Ripeti a voce",
+        "Giorno 4: Sintesi del capitolo",
+        "Giorno 5: Flashcard",
+        "Giorno 6: Ripasso attivo",
+        "Giorno 7: Quiz finale"
+      ];
+    case "Active Recall":
+      return [
+        "Giorno 1: Leggi e chiudi il libro",
+        "Giorno 2: Ripeti a voce",
+        "Giorno 3: Flashcard",
+        "Giorno 4: Quiz",
+        "Giorno 5: Ripetizione attiva",
+        "Giorno 6: Spaced repetition",
+        "Giorno 7: Test finale"
+      ];
+    case "Pomodoro":
+      return [
+        "Giorno 1: 4 pomodori",
+        "Giorno 2: 5 pomodori",
+        "Giorno 3: 6 pomodori",
+        "Giorno 4: Ripasso",
+        "Giorno 5: Quiz",
+        "Giorno 6: Ripetizione",
+        "Giorno 7: Test finale"
+      ];
+    default:
+      return [
+        "Giorno 1: Flashcard",
+        "Giorno 2: Ripasso attivo",
+        "Giorno 3: Quiz",
+        "Giorno 4: Spaced repetition",
+        "Giorno 5: Ripetizione",
+        "Giorno 6: Ripasso",
+        "Giorno 7: Test finale"
+      ];
+  }
+}
+
+/* -------------------- RESET -------------------- */
+function restart() {
+  answers = [];
+  document.getElementById("resultArea").style.display = "none";
+  startTest();
+}
+</script>
+
+</body>
+</html>
