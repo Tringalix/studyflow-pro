@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StudyFlow Pro</title>
+<title>StudyFlow Pro — Home</title>
 
 <style>
 /* -------------------- RESET -------------------- */
@@ -14,10 +14,50 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* -------------------- GLOBAL -------------------- */
+/* -------------------- NAVBAR -------------------- */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 18px 40px;
+  background: rgba(10, 15, 26, 0.85);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 999;
+  border-bottom: 1px solid rgba(0,255,200,0.2);
+}
+
+.navbar .logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #00ffc8;
+  text-shadow: 0 0 10px #00ffc8;
+}
+
+.navbar nav a {
+  margin-left: 25px;
+  color: #e8f7ff;
+  text-decoration: none;
+  font-size: 1.05rem;
+  transition: 0.25s;
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+}
+
+.navbar nav a:hover {
+  color: #00ffc8;
+  border-bottom: 2px solid #00ffc8;
+  text-shadow: 0 0 10px #00ffc8;
+}
+
+/* Spazio per evitare che il contenuto salga sotto la navbar */
 body {
   background: #0a0f1a;
   color: #e8f7ff;
+  padding-top: 90px;
   line-height: 1.6;
   overflow-x: hidden;
 }
@@ -118,26 +158,6 @@ section {
   margin-bottom: 10px;
 }
 
-/* -------------------- WHY -------------------- */
-.why-box {
-  margin-top: 40px;
-}
-
-.why-box p {
-  margin-bottom: 12px;
-}
-
-/* -------------------- STEPS -------------------- */
-.steps {
-  margin-top: 40px;
-}
-
-.step {
-  margin-bottom: 20px;
-  padding-left: 10px;
-  border-left: 3px solid #b400ff;
-}
-
 /* -------------------- CTA -------------------- */
 .cta {
   text-align: center;
@@ -165,14 +185,25 @@ footer {
 
 <body>
 
+<!-- -------------------- NAVBAR -------------------- -->
+<header class="navbar">
+  <div class="logo">StudyFlow Pro</div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="studymatch.html">StudyMatch</a>
+    <a href="gradecalc.html">GradeCalc</a>
+  </nav>
+</header>
+
 <!-- -------------------- HERO -------------------- -->
 <section class="hero">
   <h1 class="neon-title">StudyFlow Pro</h1>
   <p class="neon-sub">Studia meglio, passa prima.</p>
   <p>Strumenti intelligenti per calcolare la tua media, capire come studi e creare un piano su misura.</p>
 
-  <a href="#gradecalc" class="neon-btn btn-green">Calcola i tuoi voti</a>
-  <a href="#studymatch" class="neon-btn btn-purple">Trova il tuo metodo di studio</a>
+  <a href="gradecalc.html" class="neon-btn btn-green">Calcola i tuoi voti</a>
+  <a href="studymatch.html" class="neon-btn btn-purple">Trova il tuo metodo di studio</a>
 </section>
 
 <!-- -------------------- FEATURES -------------------- -->
@@ -197,33 +228,11 @@ footer {
   </div>
 </section>
 
-<!-- -------------------- WHY -------------------- -->
-<section>
-  <h2 class="neon-title" style="font-size:2rem;">Perché funziona</h2>
-
-  <div class="why-box">
-    <p>✨ <strong>Semplice:</strong> tutto in un’unica pagina, senza registrazione.</p>
-    <p>🧠 <strong>Intelligente:</strong> calcoli avanzati e suggerimenti personalizzati.</p>
-    <p>🎓 <strong>Creato per studenti:</strong> niente fronzoli, solo ciò che serve davvero.</p>
-  </div>
-</section>
-
-<!-- -------------------- STEPS -------------------- -->
-<section>
-  <h2 class="neon-title" style="font-size:2rem;">Come funziona</h2>
-
-  <div class="steps">
-    <div class="step"><strong>1.</strong> Inserisci i tuoi voti</div>
-    <div class="step"><strong>2.</strong> Fai il test StudyMatch</div>
-    <div class="step"><strong>3.</strong> Ottieni un piano su misura</div>
-  </div>
-</section>
-
 <!-- -------------------- CTA -------------------- -->
 <section class="cta">
   <h2>Sei pronto a migliorare il tuo studio</h2>
-  <a href="#gradecalc" class="neon-btn btn-green">Inizia ora</a>
-  <a href="#gradecalc" class="neon-btn btn-purple">Vai al calcolatore</a>
+  <a href="gradecalc.html" class="neon-btn btn-green">Inizia ora</a>
+  <a href="gradecalc.html" class="neon-btn btn-purple">Vai al calcolatore</a>
 </section>
 
 <!-- -------------------- FOOTER -------------------- -->
