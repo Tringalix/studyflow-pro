@@ -195,8 +195,37 @@ footer {
 
 <!-- -------------------- NAVBAR -------------------- -->
 <header class="navbar">
-  <div class="logo">StudyFlow Pro</div>
+  <header class="navbar">
+  <div class="logo">
+    <svg width="200" height="50" viewBox="0 0 260 60" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="neonGlow">
+          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
 
+      <text x="10" y="40"
+            font-family="Poppins, sans-serif"
+            font-size="32"
+            font-weight="700"
+            fill="#00ffc8"
+            filter="url(#neonGlow)"
+            style="letter-spacing: 1px;">
+        StudyFlow Pro
+      </text>
+    </svg>
+  </div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="studymatch.html">StudyMatch</a>
+    <a href="gradecalc.html">GradeCalc</a>
+  </nav>
+</header>
   <nav>
     <a href="index.html">Home</a>
     <a href="studymatch.html">StudyMatch</a>
