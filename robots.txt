@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tringalix.github.io/studyflow-pro/sitemap.xml
